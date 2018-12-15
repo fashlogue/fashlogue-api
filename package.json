@@ -1,7 +1,7 @@
 {
-  "name": "voltron-server",
+  "name": "fashlogue-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "This a digital catalog on and off the block chain with different Auth mechanism",
   "main": "index.js",
   "directories": {
     "test": "test"
