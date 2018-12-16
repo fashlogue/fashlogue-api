@@ -48,11 +48,20 @@ class Express {
         //
         // Connect to mongo using mongoose
         // @todo: fix "open()" DeprecationWarning warning
-        mongoose.connect(process.env.MONGO_URI, options, (err)=>{
-            if(err){
-                console.log(err);
-            }
-        });
+        if (process.env.NODE_ENV === 'test') {
+            mongoose.connect(process.env.MONGO_TEST_URI, options, (err)=>{
+                if(err){
+                    console.log(err);
+                }
+            });
+        } else {
+            mongoose.connect(process.env.MONGO_URI, options, (err)=>{
+                if(err){
+                    console.log(err);
+                }
+            });
+        }
+        
     }
 
 

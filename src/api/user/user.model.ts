@@ -13,19 +13,41 @@ let UserSchema: Schema = new Schema({
     email: {
         type: String,
         unique: true,
-        required: true,
         default: ''
+      },
+    verified: {
+        type: Boolean,
+        default: false
+      },
+    roles: {
+        type: Array,
+        default: ['user'],
       },
     username: {
         type: String,
         unique: true,
         required: true,
         default:'',
-        lowercase: true
+        lowercase: true,
+      },
+      isBanned: {
+        type: Boolean,
+        default: false,
+      },
+      bannedUntil: {
+        type: Number,
+        default: null,
+      },
+      banReason: {
+        type: String,
+        default: null,
+      },
+      bannedBy: {
+        type: String,
+        default: null,
       },
     password: {
         type: String,
-        required: true,
         default: ''
       },
     createdAt: {
