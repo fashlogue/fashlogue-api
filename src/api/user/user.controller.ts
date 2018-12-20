@@ -3,7 +3,6 @@ import UserModel from './user.model';
 import * as isEmail from 'validator/lib/isEmail';
 import * as jwt from 'jwt-simple';
 import * as bcrypt from 'bcrypt';
-import model from './user.model';
 
 
 export default class UserController {
@@ -55,6 +54,7 @@ export default class UserController {
             //
             // Get data
             const username: String = req.params.username;
+            console.log(username);
             let result = await UserModel.findOne({ username }).exec();
             const status = res.statusCode;
 
@@ -99,38 +99,12 @@ export default class UserController {
   public static create(req: Request, res: Response, next: NextFunction): void {
 
     // The attributes.
-    let email = req.body.email;
     let password = req.body.password;
     let username = req.body.username;
-    let name = req.body.name;
 
-    console.log(email);
 
     // The errors object
     let errors: Array<Object> = [];
-
-    // Check email
-    if(!email){
-      errors.push({
-        title: "Attribute is missing",
-        detail: "No email specified"
-      });
-    }else{
-      // If email has not email format
-      if(!isEmail(email)){
-        errors.push({
-          title: "Invalide attribute",
-          detail: "Email must have an email format"
-        });
-      }
-      // If email doesn't have characters length requirments
-      if(email.length < 5){
-        errors.push({
-          title: "Invalid attribute",
-          detail: "Email must contain at least five characters"
-        });
-      }
-    }
 
     // Check password
     if(!password){
@@ -153,7 +127,7 @@ export default class UserController {
         errors: errors
       });
     }else{
-      UserModel.create({ email, password, username, name })
+      UserModel.create({ password, username })
       .then(user => {
         res.status(201).send({
           data: {
@@ -177,22 +151,26 @@ export default class UserController {
 }
 
     public static async update(req: Request, res: Response, next: NextFunction) {
-        const username:String = req.params;
+  
 
         try {
 
             //
             // Get data
+           
             const username: String = req.params.username;
-            let result = await UserModel.findOneAndUpdate({ username }, {
-                ...req.body,
-                updatedAt: new Date()
-            }).exec();
-            const status = res.statusCode;
+          let result = await UserModel.findOneAndUpdate(
+            { username }, 
+            {
+              ...req.body,
+               modifiedAt: new Date()
+            }).exec()
+
+           const status = res.statusCode;
 
             //
             // Response
-            res.send({
+           return res.send({
                 message: 'Sucessfully updated a user',
                 result: result,
                 status: status
@@ -202,7 +180,7 @@ export default class UserController {
             //
             // Error response
             res.send({
-                message: 'Could not create the user',
+                message: 'Could not update the user',
                 err: err
             });
         }
