@@ -2,6 +2,7 @@ import { Schema, Document, model, Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as uniqueValidator from "mongoose-unique-validator";
 import { IUser } from './user.interface';
+import * as passport from 'passport';
 
 const SALT_WORK_FACTOR = 10;
 
@@ -81,27 +82,16 @@ export let UserSchema: Schema = new Schema({
 
 UserSchema.plugin(uniqueValidator);
 
-UserSchema.pre('save', function(next) {
-  var user = this;
-
-  // only hash the password if it has been modified (or is new)
-  if (!user.isModified('password')) return next();
-
-  // generate a salt
-  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-      if (err) return next(err);
-
-      // hash the password using our new salt
-      bcrypt.hash(user.password, salt, function(err, hash) {
-          if (err) return next(err);
-
-          // override the cleartext password with the hashed one
-          user.password = hash;
-          next();
-      });
-  });
-
-
+UserSchema.pre<IUser>('save', function(next) {
+  let user = this
+  bcrypt.hash(user.password, 10, (error, hash)=>{
+    if(error) {
+      return next(error);
+    } else{
+      this.password = hash
+      next()
+    }
+  })
 });
 
 
@@ -109,7 +99,6 @@ interface UserSchemaDoc extends IUser, Document {
   comparePassword(pw, cb);
 }
 
-//interface UserSchemaInterface extends UserSchemaDoc {}
 
 // method to compare password
 UserSchema.methods = {

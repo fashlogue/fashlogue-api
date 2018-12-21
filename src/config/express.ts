@@ -43,25 +43,36 @@ class Express {
         var options = {
             autoIndex: false, // Don't build indexes
             reconnectInterval: 500, // Reconnect every 500ms
-            bufferMaxEntries: 0
+            bufferMaxEntries: 0,
+            useNewUrlParser: true
           };
         //
         // Connect to mongo using mongoose
         // @todo: fix "open()" DeprecationWarning warning
-        if (process.env.NODE_ENV === 'test') {
+
+        switch (process.env.NODE_ENV) {
+            case 'test':
             mongoose.connect(process.env.MONGO_TEST_URI, options, (err)=>{
+                console.log('connected to test database')
                 if(err){
                     console.log(err);
                 }
             });
-        } else {
+
+            break;
+
+            default: 'development'
+
             mongoose.connect(process.env.MONGO_URI, options, (err)=>{
+                console.log('connected to development database')
                 if(err){
                     console.log(err);
                 }
             });
+
+            break;   
         }
-        
+
     }
 
 

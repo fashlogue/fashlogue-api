@@ -2,8 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import UserModel from './user.model';
 import * as isEmail from 'validator/lib/isEmail';
 import * as jwt from 'jwt-simple';
-import * as bcrypt from 'bcrypt';
-
 
 export default class UserController {
 
@@ -151,20 +149,28 @@ export default class UserController {
 }
 
     public static async update(req: Request, res: Response, next: NextFunction) {
-  
 
         try {
 
             //
             // Get data
+            var options = {
+              // Return the document after updates are applied
+              new: true,
+              // Create a document if one isn't found. Required
+              // for `setDefaultsOnInsert`
+              upsert: true,
+              setDefaultsOnInsert: true
+            };
+            
            
             const username: String = req.params.username;
           let result = await UserModel.findOneAndUpdate(
-            { username }, 
+            { username },
             {
               ...req.body,
                modifiedAt: new Date()
-            }).exec()
+            },options).exec()
 
            const status = res.statusCode;
 
