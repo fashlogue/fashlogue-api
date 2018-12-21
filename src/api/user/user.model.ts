@@ -1,18 +1,38 @@
 import { Schema, Document, model, Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as uniqueValidator from "mongoose-unique-validator";
-import * as mongoose from 'mongoose';
+import { IUser } from './user.interface';
+import * as passport from 'passport';
 
 const SALT_WORK_FACTOR = 10;
 
-let UserSchema: Schema = new Schema({
+export let UserSchema: Schema = new Schema({
     name: {
         type: String,
-        required: true,
+        default: ''
       },
+    oauthId: {
+      type: Number,
+      default: null
+    },
+    profilePic: {
+      type: String,
+      default: ''
+    },
+    bio: {
+      type: String,
+      default: ''
+    },
+    brand: {
+      type: String,
+      default: ''
+    },
+    phone: {
+      type: Number,
+      default: null
+    },
     email: {
         type: String,
-        unique: true,
         default: ''
       },
     verified: {
@@ -54,7 +74,7 @@ let UserSchema: Schema = new Schema({
       type: Date,
       default: new Date
     },
-    updatedAt: {
+    modifiedAt: {
       type: Date,
       default: new Date
     }, 
@@ -62,35 +82,23 @@ let UserSchema: Schema = new Schema({
 
 UserSchema.plugin(uniqueValidator);
 
-UserSchema.pre('save', function(next) {
-  var user = this;
-
-  // only hash the password if it has been modified (or is new)
-  if (!user.isModified('password')) return next();
-
-  // generate a salt
-  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-      if (err) return next(err);
-
-      // hash the password using our new salt
-      bcrypt.hash(user.password, salt, function(err, hash) {
-          if (err) return next(err);
-
-          // override the cleartext password with the hashed one
-          user.password = hash;
-          next();
-      });
-  });
-
-
+UserSchema.pre<IUser>('save', function(next) {
+  let user = this
+  bcrypt.hash(user.password, 10, (error, hash)=>{
+    if(error) {
+      return next(error);
+    } else{
+      this.password = hash
+      next()
+    }
+  })
 });
 
 
-interface UserSchemaDoc extends Document {
+interface UserSchemaDoc extends IUser, Document {
   comparePassword(pw, cb);
 }
 
-//interface UserSchemaInterface extends UserSchemaDoc {}
 
 // method to compare password
 UserSchema.methods = {
@@ -104,6 +112,5 @@ UserSchema.methods = {
   }
 };
 
-
-
-export default model<UserSchemaDoc>('User', UserSchema);
+const UserModel: Model<UserSchemaDoc> = model<UserSchemaDoc>('User', UserSchema);
+export default UserModel;
