@@ -11,11 +11,10 @@ export default class UserController {
      * @param {*} res
      * @param {*} next
      */
-    public static async getAll(req: Request, res: Response, next: NextFunction) {
+      public static async getAll(req: Request, res: Response, next: NextFunction) {
 
         try {
 
-            //
             // Get data
             let result = await UserModel.find().exec();
             const status = res.statusCode;
@@ -162,8 +161,8 @@ export default class UserController {
               upsert: true,
               setDefaultsOnInsert: true
             };
-            
-           
+
+
             const username: String = req.params.username;
           let result = await UserModel.findOneAndUpdate(
             { username },
@@ -195,38 +194,14 @@ export default class UserController {
     public static async authenticate(req: Request, res: Response, next: NextFunction) {
 
         // The attributes.
-        let email = req.body.email;
+        let username = req.body.username;
         let password = req.body.password;
 
         // The errors object
         let errors: Array<Object> = [];
 
-        // Check email
-        if (!email) {
-          errors.push({
-            title: "Attribute is missing",
-            detail: "No email specified"
-          });
-        } else {
 
-          // If email has not email format
-          if (!isEmail(email)) {
-            errors.push({
-              title: "Invalide attribute",
-              detail: "Email must have an email format"
-            });
-          }
-
-          // If email doesn't have characters length requirments
-          if(email.length < 5){
-            errors.push({
-              title: "Invalid attribute",
-              detail: "Email must contain at least five characters"
-            });
-          }
-
-        }
-
+        
         // Check password
         if (!password) {
           errors.push({
@@ -249,7 +224,7 @@ export default class UserController {
           });
         } else {
 
-            UserModel.findOne({ email }).then(user => {
+            UserModel.findOne({ username }).then(user => {
             if (user) {
               user.comparePassword(password, (err, isMatch) => {
 
@@ -289,7 +264,7 @@ export default class UserController {
               res.status(400).send({
                 errors: [{
                   title: "Invalid attribute",
-                  detail: "The email does not exist"
+                  detail: "The user doesn't exist in our records"
                 }]
               })
             }

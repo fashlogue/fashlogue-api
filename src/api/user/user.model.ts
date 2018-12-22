@@ -101,7 +101,7 @@ interface UserSchemaDoc extends IUser, Document {
 
 
 // method to compare password
-UserSchema.methods = {
+export const passwordMethod = UserSchema.methods = {
   comparePassword: function(pw, cb) {
     bcrypt.compare(pw, this.password, function(err, isMatch) {
         if (err) {
