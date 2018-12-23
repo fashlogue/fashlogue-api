@@ -1,5 +1,13 @@
-# fashlogue-api
-This a digital catalog on and off the block chain with different Auth mechanism
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+[![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-auth-jwt2/badge.svg?targetFile=package.json)](https://snyk.io/test/github/dwyl/hapi-auth-jwt2?targetFile=package.json)
+[![devDependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/dev-status.svg)](https://david-dm.org/dwyl/hapi-auth-jwt2?type=dev)
+
+# fashlogue-api docs
+
+![fashlogue logo](https://i.ibb.co/hZP35mr/Fashlogue-Logo.png)
+
+This a digital catalog on and off the block chain with different Auth mechanism.
+Fashlogue which has a user and designer model, its value proposition is relating users with designers in an interactive manner. It focuses on displaying post and catalogue of each designer, in turn get reviews from users. Reviews such as ratings, likes, comments.
 
 This is the base API for the Fashlogue. It comes configured with the following tools:
 
@@ -9,24 +17,29 @@ This is the base API for the Fashlogue. It comes configured with the following t
 
 ## NPM / Yarn scripts
 
-The following scripts are provided to build, lint, etc:
+The following scripts are provided to build, test etc:
 
 - `dev` watch compillation of ts code
 - `build-ts` builds your site for use in a development environment and outputs it to `dist`
 - `quick-build` builds your site for deployment to a production environment
 - `dev-server` starts the server and watch in compillation
 - `serve` runs TSLint with the configured settings
-- `test` runs all your tests with coverage.
+- `test:integration` runs all all integration test.
+- `test:unit` runs all all integration test.
+- `coverage` runs coverage test.
 - `watch ts` watch compillation of ts code
 
 ## Linting
 
-We work with TSLint and a mostly unmodified preset for the [Airbnb style guide](https://github.com/airbnb/javascript/).
+We work with TSLint.
 It is one of the most widely used styleguides by the JS community and offers pretty strict linting too!
+Running lint scripts
+
+- `lint` show lint errors on code.
 
 ## Testing
 
-Tests are written with Jest and picked up anywhere in the `src` directory if they include `.test` or `.spec` (e.g. `Home.spec.tsx`).
+Tests are written with Mocha as the test runner and chai for assertion, test are picked up anywhere in the `src/test` directory if they include `.test` (e.g. `user.test.ts`).
 
 ## Contributing
 
