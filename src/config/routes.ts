@@ -20,7 +20,7 @@ export default class Route {
     }
 
     private setAllRoutes() {
-        this.app.use('/api/users', UserRouter);
+        this.app.use('/api/v1/users', UserRouter);
     }
 
 }

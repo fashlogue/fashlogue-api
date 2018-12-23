@@ -15,7 +15,7 @@
     "lint": "tslint src/**/*.ts -p tsconfig.json",
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*{.ts}",
     "test": "cross-env NODE_ENV=test nyc --reporter=html ts-mocha --timeout 20000  -p  src/tsconfig.json --recursive src/**/*.test.ts",
-    "test:integration": "cross-env NODE_ENV=test  ts-mocha --timeout 15000  -p  src/tsconfig.json src/test/integration/*.test.ts --exit",
+    "test:integration": "cross-env NODE_ENV=test  ts-mocha --timeout 20000  -p  src/tsconfig.json src/test/integration/*.test.ts --exit",
     "coverage": "nyc npm run test:integration",
     "watch-ts": "tsc-watch -w -p src --onSuccess \"npm run serve\""
   },
