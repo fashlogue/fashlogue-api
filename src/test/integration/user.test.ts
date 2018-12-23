@@ -6,7 +6,7 @@ import 'mocha';
 const request = require('supertest');
 require('ts-mocha');
 
-process.env.NODE_ENV = 'test';
+
 describe('USER', ()=> {
     beforeEach(function (done) {
         UserModel.deleteMany({}, (err) => {
@@ -14,10 +14,10 @@ describe('USER', ()=> {
         })
     });
 
-    describe('GET /api/users', ()=> {
+    describe('GET /api/v1/users', ()=> {
         it('Should return all users in the DB', ()=>{
             return request(app)
-            .get('/api/users')
+            .get('/api/v1/users')
             .expect(httpStatus.OK)
             .then((res) => {
                 expect(res.body.result).to.be.an('array');
@@ -27,10 +27,10 @@ describe('USER', ()=> {
         
     })
     
-    describe('POST /api/users ', ()=>{ 
+    describe('POST /api/v1/users ', ()=>{ 
         it('Should create a user in the db', ()=> {
             return request(app)
-            .post('/api/users')
+            .post('/api/v1/users')
             .send({
                 username: 'perpz',
                 password: 'miracle123'
@@ -44,7 +44,7 @@ describe('USER', ()=> {
         });
     })
     
-    describe('PUT /api/users/:username ', ()=>{
+    describe('PUT /api/v1/users/:username ', ()=>{
         
         it('Should update oauthId in users model', (done)=>{
             let user = new UserModel({
@@ -53,7 +53,7 @@ describe('USER', ()=> {
             });
             user.save((err, user)=> {
                 request(app)
-                .put('/api/users/'+user.username)
+                .put('/api/v1/users/'+user.username)
                 .send({
                     oauthId: 200
                 })
@@ -73,7 +73,7 @@ describe('USER', ()=> {
             });
             user.save((err, user)=> {
             request(app)
-            .put('/api/users/'+user.username)
+            .put('/api/v1/users/'+user.username)
             .send({
                 oauthId: 'hello'
             })
@@ -86,9 +86,10 @@ describe('USER', ()=> {
 
             })
         })
+        
     })
 
-    describe('POST /api/users/authenticate', ()=> {
+    describe('POST /api/v1/users/authenticate', ()=> {
         it('it Should authenticate a valid user', (done)=> {
             let user = new UserModel({
                 username: "ogbiyoyosky",
@@ -96,7 +97,7 @@ describe('USER', ()=> {
             });
             user.save((err, user)=> {
                 request(app)
-                .post('/api/users/authenticate')
+                .post('/api/v1/users/authenticate')
                 .send({
                     username: "ogbiyoyosky",
                     password: "miracle123"
@@ -117,7 +118,7 @@ describe('USER', ()=> {
             });
             user.save((err, user)=> {
                 request(app)
-                .post('/api/users/authenticate')
+                .post('/api/v1/users/authenticate')
                 .send({
                     username: "sirfreeman",
                 })
@@ -136,7 +137,7 @@ describe('USER', ()=> {
             });
             user.save((err, user)=> {
                 request(app)
-                .post('/api/users/authenticate')
+                .post('/api/v1/users/authenticate')
                 .send({
                     username: "sirfreeman",
                     password: "mira"
@@ -150,17 +151,17 @@ describe('USER', ()=> {
         })
 
         it('it should return error if user does not exist', (done)=> {
-                request(app)
-                .post('/api/users/authenticate')
-                .send({
-                    username: "freemanity",
-                    password: "miracle123"
-                })
-                .then((res)=>{
-                    expect(res.body.errors).to.be.an('array');
-                    expect(res.body.errors[0].detail).to.be.eql("The user doesn't exist in our records");
-                    done();
-                })
+            request(app)
+            .post('/api/v1/users/authenticate')
+            .send({
+                username: "freemanity",
+                password: "miracle123"
+            })
+            .then((res)=>{
+                expect(res.body.errors).to.be.an('array');
+                expect(res.body.errors[0].detail).to.be.eql("The user doesn't exist in our records");
+                done();
+            })
         })
     })
 

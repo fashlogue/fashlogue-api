@@ -6,6 +6,11 @@ import * as passport from 'passport';
 
 const SALT_WORK_FACTOR = 10;
 
+/**
+ * User Schema
+ * @author Freeman Ogbiyoyo
+ * @public
+ */
 export let UserSchema: Schema = new Schema({
     name: {
         type: String,
@@ -84,7 +89,7 @@ UserSchema.plugin(uniqueValidator);
 
 UserSchema.pre<IUser>('save', function(next) {
   let user = this
-  bcrypt.hash(user.password, 10, (error, hash)=>{
+  bcrypt.hash(user.password, SALT_WORK_FACTOR, (error, hash)=>{
     if(error) {
       return next(error);
     } else{
@@ -94,13 +99,21 @@ UserSchema.pre<IUser>('save', function(next) {
   })
 });
 
-
+/**
+ * UserShchemaDoc Interface
+ * @author Freeman Ogbiyoyo
+ * @public
+ */
 interface UserSchemaDoc extends IUser, Document {
   comparePassword(pw, cb);
 }
 
 
-// method to compare password
+/**
+ * method to comparePassword.
+ * @author Freeman Ogbiyoyo
+ * @public
+ */
 export const passwordMethod = UserSchema.methods = {
   comparePassword: function(pw, cb) {
     bcrypt.compare(pw, this.password, function(err, isMatch) {
