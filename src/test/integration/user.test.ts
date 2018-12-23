@@ -23,6 +23,8 @@ describe('USER', ()=> {
                 expect(res.body.result).to.be.an('array');
             });
         });
+
+        
     })
     
     describe('POST /api/users ', ()=>{ 
@@ -63,7 +65,27 @@ describe('USER', ()=> {
                 })
             })
         })
-        
+
+        it('It should return, can not update user if error', (done)=> {
+            let user = new UserModel({
+                username: "caleb",
+                password: "miracle123"
+            });
+            user.save((err, user)=> {
+            request(app)
+            .put('/api/users/'+user.username)
+            .send({
+                oauthId: 'hello'
+            })
+            .expect(httpStatus.OK)
+            .then((res)=> {
+                expect(res.body).to.have.property('err');
+                expect(res.body.message).to.be.equal('Could not update the user');
+                done()
+            })
+
+            })
+        })
     })
 
     describe('POST /api/users/authenticate', ()=> {
@@ -125,6 +147,20 @@ describe('USER', ()=> {
                     done();
                 })
             })
+        })
+
+        it('it should return error if user does not exist', (done)=> {
+                request(app)
+                .post('/api/users/authenticate')
+                .send({
+                    username: "freemanity",
+                    password: "miracle123"
+                })
+                .then((res)=>{
+                    expect(res.body.errors).to.be.an('array');
+                    expect(res.body.errors[0].detail).to.be.eql("The user doesn't exist in our records");
+                    done();
+                })
         })
     })
 

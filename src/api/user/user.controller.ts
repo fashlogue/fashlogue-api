@@ -85,7 +85,7 @@ export default class UserController {
       _id: user._id,
       email: user.email
     };
-}
+  }
     /**
      * Create
      * @param {*} req
