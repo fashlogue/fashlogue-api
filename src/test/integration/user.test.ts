@@ -73,7 +73,7 @@ describe('USER', ()=> {
             });
             user.save((err, user)=> {
             request(app)
-            .put('/api/users/'+user.username)
+            .put('/api/v1/users/'+user.username)
             .send({
                 oauthId: 'hello'
             })
@@ -152,7 +152,7 @@ describe('USER', ()=> {
 
         it('it should return error if user does not exist', (done)=> {
             request(app)
-            .post('/api/users/authenticate')
+            .post('/api/v1/users/authenticate')
             .send({
                 username: "freemanity",
                 password: "miracle123"
