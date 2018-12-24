@@ -140,7 +140,12 @@
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -154,11 +159,17 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -215,7 +226,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -252,12 +262,17 @@ class Express {
 &nbsp;
 &nbsp;
     constructor () {
+        //initiate app
         this.app = express();
-&nbsp;
+        //initiate env
         this.setupEnv();
+        //initiate passport
         this.initializePassport();
+        //initiate connection to db
         this.setupMongo();
+        //setup middlewares
         this.setupMiddleware();
+        //routes for the app
         this.setupRoutes();
     }
 &nbsp;
@@ -278,22 +293,22 @@ class Express {
             autoIndex: false, // Don't build indexes
             reconnectInterval: 500, // Reconnect every 500ms
             bufferMaxEntries: 0,
-            useNewUr<span class="missing-if-branch" title="if path not taken" >I</span>lParser: true
-          };<span class="cstat-no" title="statement not covered" ></span>
-        //
+            useNewUrlParser: true
+          };<span class="missing-if-branch" title="if path not taken" >I</span>
+        //<span class="cstat-no" title="statement not covered" ></span>
         // Connect to mongo using mongoose
         // @todo: fix "open()" DeprecationWarning warning
-<span class="branch-1 cbranch-no" title="branch not covered" ></span>
-        switch (<span class="cstat-no" title="statement not covered" >process.env.NOD</span>E_ENV) {
-            //if environment is test 
-            case<span class="cstat-no" title="statement not covered" > 'test':<span class="fstat-no" title="function not covered" ></span></span>
-            // use t<span class="cstat-no" title="statement not covered" >est URI</span>
-            mongoose<span class="cstat-no" title="statement not covered" >.connect(process.env.MONGO_TEST_URI, options, (err)=&gt;{</span>
-                console.<span class="cstat-no" title="statement not covered" >log('connected to </span>test database')
-                if(err){
+&nbsp;
+        swit<span class="branch-1 cbranch-no" title="branch not covered" >ch (process.env.NODE_ENV) {</span>
+            //if<span class="cstat-no" title="statement not covered" > environment is</span> test 
+            case 'test':
+            // u<span class="cstat-no" title="statement not covered" >se test URI<span class="fstat-no" title="function not covered" ></span></span>
+            mongoose<span class="cstat-no" title="statement not covered" >.connect(process.env.MONGO_TEST_URI, options, (err</span>)=&gt;{
+                cons<span class="cstat-no" title="statement not covered" >ole.log('connected to test database')</span>
+                if(err){<span class="cstat-no" title="statement not covered" ></span>
                     console.log(err);
-<span class="cstat-no" title="statement not covered" >                }</span>
-            });
+                }
+            });<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
             break;
 &nbsp;
@@ -334,7 +349,7 @@ export default new Express().app;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Dec 23 2018 17:59:52 GMT+0000 (Coordinated Universal Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 24 2018 04:22:05 GMT+0000 (Coordinated Universal Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

@@ -94,16 +94,16 @@
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -113,6 +113,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -121,20 +122,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,58 +134,61 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as http from 'http';
+<span class="cstat-no" title="statement not covered" >import Express from './config/express';</span>
+const port <span class="cstat-no" title="statement not covered" >= normalizePort(</span>process.env.PORT) || 3000;
 <span class="cstat-no" title="statement not covered" ></span>
+// set serv<span class="cstat-no" title="statement not covered" >er's port</span>
+Express.set('port', port);
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ></span>
-import Expr<span class="cstat-no" title="statement not covered" >ess from './config/express';</span>
-<span class="cstat-no" title="statement not covered" ></span>
-const port = <span class="cstat-no" title="statement not covered" >normalizePort(process.env.PORT) || 30</span>00;
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >Express.set('port', port);</span>
+//initiate an instance of the server
+const server <span class="cstat-no" title="statement not covered" >= http.createServer(Express);</span>
+// server listen on port
+<span class="cstat-no" title="statement not covered" >server.listen(port);</span>
+<span class="cstat-no" title="statement not covered" >server.on('listen', onListening);</span>
+<span class="cstat-no" title="statement not covered" >server.on('error', onError);</span>
 <span class="fstat-no" title="function not covered" ></span>
-const server = <span class="cstat-no" title="statement not covered" >http.createServer</span>(Express);
-<span class="cstat-no" title="statement not covered" ></span>
-serv<span class="cstat-no" title="statement not covered" >er.listen(port);</span>
-server.on('listen', onListening);
-server.on<span class="fstat-no" title="function not covered" >('error'</span>, onError);
-<span class="cstat-no" title="statement not covered" ></span>
-function<span class="cstat-no" title="statement not covered" > onListenin</span>g ():void {
+function onList<span class="cstat-no" title="statement not covered" >ening ():void {</span>
     let addr = <span class="cstat-no" title="statement not covered" >server.address();</span>
-<span class="cstat-no" title="statement not covered" >    let bind = (typeof addr === "string") ? `pipe ${addr}` : `port ${addr.port}`</span>
+<span class="cstat-no" title="statement not covered" >    let bind = (typeof addr === "string") </span>? `pipe ${addr}` : `port ${addr.port}`
     console.info(`Listening on ${bind}`);
-}<span class="cstat-no" title="statement not covered" ></span>
+}
+//error h<span class="fstat-no" title="function not covered" >andling</span>
+func<span class="cstat-no" title="statement not covered" >tion onError (err: NodeJS.ErrnoException):void {</span>
+    if (<span class="cstat-no" title="statement not covered" >err.syscall</span> !== "listen") throw err;
 <span class="cstat-no" title="statement not covered" ></span>
-function onError (err: NodeJS.ErrnoException):void {
-    if (err.<span class="cstat-no" title="statement not covered" >syscall !== "listen") throw err;</span>
-<span class="cstat-no" title="statement not covered" ></span>
-    let bind = (typeof port === "string") ? `pipe ${port}` : `port ${port}`;
-<span class="cstat-no" title="statement not covered" ></span>
-    switch (err.code) {
-        case 'EACCESS':
+<span class="cstat-no" title="statement not covered" >    let bind = (typeof port === "string") ? `pipe ${port}` : `port ${port}`;</span>
+&nbsp;
+    switch (<span class="cstat-no" title="statement not covered" >err.code) {</span>
+        case<span class="cstat-no" title="statement not covered" > 'EACCESS':</span>
             console.error(`You don't have access to ${bind}`);
             process.exit(1);
+        //if<span class="cstat-no" title="statement not covered" > address already in use</span>
+        case<span class="cstat-no" title="statement not covered" > 'EADDRINUSE':</span>
+            console.error(`The address ${bind} is taken. Boohoo for you.`);
+<span class="cstat-no" title="statement not covered" >            process.exi</span>t(1);
+        default:
+            throw err;
+    }
+}
 &nbsp;
-        case 'EADDRINUSE':
-<span class="fstat-no" title="function not covered" >            console.err</span>or(`The address ${bind} is taken. Boohoo for you.`);
-            pro<span class="cstat-no" title="statement not covered" >cess.exit(1);</span>
-<span class="cstat-no" title="statement not covered" >        default:</span>
-<span class="cstat-no" title="statement not covered" >            throw er</span>r;
-    }<span class="cstat-no" title="statement not covered" ></span>
-}<span class="cstat-no" title="statement not covered" ></span>
-&nbsp;
-/**<span class="cstat-no" title="statement not covered" ></span>
- * Normalize port
- * @param {*} val
- */
-function normalizePort(val: number | string): number | string | boolean {
-    let port: number = (typeof val === 'string') ? parseInt(val, 10) : val;
-    if (isNaN(port)) return val;
+/**
+ * Normal<span class="fstat-no" title="function not covered" >ize port</span>
+ * @param {*} v<span class="cstat-no" title="statement not covered" >al</span>
+ */<span class="cstat-no" title="statement not covered" ></span>
+function<span class="cstat-no" title="statement not covered" > normalizePo</span>rt(val: number | string): number | string | boolean {
+    let p<span class="cstat-no" title="statement not covered" >ort: number = (typeof val === 'string') ? parseInt(val, 10) : val;</span>
+    if (<span class="cstat-no" title="statement not covered" >isNaN(port)) </span>return val;
     else if (port &gt;= 0) return port;
-    else return false;
+    else<span class="cstat-no" title="statement not covered" > return false;</span>
 }
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -205,7 +196,7 @@ function normalizePort(val: number | string): number | string | boolean {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Dec 23 2018 17:59:52 GMT+0000 (Coordinated Universal Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 24 2018 04:22:05 GMT+0000 (Coordinated Universal Time)
 </div>
 </div>
 <script src="..\prettify.js"></script>

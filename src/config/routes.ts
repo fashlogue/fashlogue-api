@@ -1,11 +1,11 @@
-import { Express, Router, Request, Response, NextFunction } from 'express';
+import {Express, Router, Request, Response, NextFunction} from 'express';
 import UserRouter from '../api/user/user.router';
 
 export default class Route {
-    public router: Router;
+    public router : Router;
     private app;
 
-    constructor (app: Express) {
+    constructor(app : Express) {
         // Set router
         this.router = Router();
 
@@ -20,7 +20,9 @@ export default class Route {
     }
 
     private setAllRoutes() {
-        this.app.use('/api/v1/users', UserRouter);
+        this
+            .app
+            .use('/api/v1/users', UserRouter);
     }
 
 }

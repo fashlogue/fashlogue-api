@@ -16,12 +16,17 @@ class Express {
 
 
     constructor () {
+        //initiate app
         this.app = express();
-
+        //initiate env
         this.setupEnv();
+        //initiate passport
         this.initializePassport();
+        //initiate connection to db
         this.setupMongo();
+        //setup middlewares
         this.setupMiddleware();
+        //routes for the app
         this.setupRoutes();
     }
 

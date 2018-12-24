@@ -174,7 +174,8 @@
 <a name='L126'></a><a href='#L126'>126</a>
 <a name='L127'></a><a href='#L127'>127</a>
 <a name='L128'></a><a href='#L128'>128</a>
-<a name='L129'></a><a href='#L129'>129</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -280,6 +281,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -302,10 +304,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Schema, Document, model, Model } from 'mongoose';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Schema, Document, model, Model} from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as uniqueValidator from "mongoose-unique-validator";
-import { IUser } from './user.interface';
+import {IUser} from './user.interface';
 import * as passport from 'passport';
 &nbsp;
 const SALT_WORK_FACTOR = 10;
@@ -315,88 +317,88 @@ const SALT_WORK_FACTOR = 10;
  * @author Freeman Ogbiyoyo
  * @public
  */
-export let UserSchema: Schema = new Schema({
-    name: {
-        type: String,
-        default: ''
-      },
-    oauthId: {
-      type: Number,
-      default: null
-    },
-    profilePic: {
-      type: String,
-      default: ''
-    },
-    bio: {
-      type: String,
-      default: ''
-    },
-    brand: {
-      type: String,
-      default: ''
-    },
-    phone: {
-      type: Number,
-      default: null
-    },
-    email: {
-        type: String,
-        default: ''
-      },
-    verified: {
-        type: Boolean,
-        default: false
-      },
-    roles: {
-        type: Array,
-        default: ['user'],
-      },
-    username: {
-        type: String,
-        unique: true,
-        required: true,
-        default:'',
-        lowercase: true,
-      },
-      isBanned: {
-        type: Boolean,
-        default: false,
-      },
-      bannedUntil: {
-        type: Number,
-        default: null,
-      },
-      banReason: {
-        type: String,
-        default: null,
-      },
-      bannedBy: {
-        type: String,
-        default: null,
-      },
-    password: {
-        type: String,
-        default: ''
-      },
-    createdAt: {
-      type: Date,
-      default: new Date
-    },
-    modifiedAt: {
-      type: Date,
-      default: new Date
-    }, 
+export let UserSchema : Schema = new Schema({
+  name: {
+    type: String,
+    default: ''
+  },
+  oauthId: {
+    type: Number,
+    default: null
+  },
+  profilePic: {
+    type: String,
+    default: ''
+  },
+  bio: {
+    type: String,
+    default: ''
+  },
+  brand: {
+    type: String,
+    default: ''
+  },
+  phone: {
+    type: Number,
+    default: null
+  },
+  email: {
+    type: String,
+    default: ''
+  },
+  verified: {
+    type: Boolean,
+    default: false
+  },
+  roles: {
+    type: Array,
+    default: ['user']
+  },
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+    default: '',
+    lowercase: true
+  },
+  isBanned: {
+    type: Boolean,
+    default: false
+  },
+  bannedUntil: {
+    type: Number,
+    default: null
+  },
+  banReason: {
+    type: String,
+    default: null
+  },
+  bannedBy: {
+    type: String,
+    default: null
+  },
+  password: {
+    type: String,
+    default: ''
+  },
+  createdAt: {
+    type: Date,
+    default: new Date
+  },
+  modifiedAt: {
+    type: Date,
+    default: new Date
+  }
 });
 &nbsp;
 UserSchema.plugin(uniqueValidator);
 &nbsp;
-UserSche<span class="missing-if-branch" title="if path not taken" >I</span>ma.pre&lt;IUser&gt;('save', function(next) {
+UserSche<span class="missing-if-branch" title="if path not taken" >I</span>ma.pre &lt; IUser &gt; ('save', function (next) {
   let user =<span class="cstat-no" title="statement not covered" > this</span>
-  bcrypt.hash(user.password, SALT_WORK_FACTOR, (error, hash)=&gt;{
-    if(error) {
+  bcrypt.hash(user.password, SALT_WORK_FACTOR, (error, hash) =&gt; {
+    if (error) {
       return next(error);
-    } else{
+    } else {
       this.password = hash
       next()
     }
@@ -408,10 +410,10 @@ UserSche<span class="missing-if-branch" title="if path not taken" >I</span>ma.pr
  * @author Freeman Ogbiyoyo
  * @public
  */
-interface Us<span class="missing-if-branch" title="if path not taken" >I</span>erSchemaDoc extends IUser, Document {
+interface UserSchemaDoc extends IUser,
+Document {<span class="missing-if-branch" title="if path not taken" >I</span>
   comparePasswor<span class="cstat-no" title="statement not covered" >d(pw, cb);</span>
 }
-&nbsp;
 &nbsp;
 /**
  * method to comparePassword.
@@ -419,24 +421,25 @@ interface Us<span class="missing-if-branch" title="if path not taken" >I</span>e
  * @public
  */
 export const passwordMethod = UserSchema.methods = {
-  comparePassword: function(pw, cb) {
-    bcrypt.compare(pw, this.password, function(err, isMatch) {
+  comparePassword: function (pw, cb) {
+    bcrypt
+      .compare(pw, this.password, function (err, isMatch) {
         if (err) {
           return cb(err);
         }
-        cb(null, isMatch); 
-    });
+        cb(null, isMatch);
+      });
   }
 };
 &nbsp;
-const UserModel: Model&lt;UserSchemaDoc&gt; = model&lt;UserSchemaDoc&gt;('User', UserSchema);
+const UserModel : Model &lt; UserSchemaDoc &gt; = model &lt; UserSchemaDoc &gt; ('User', UserSchema);
 export default UserModel;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Dec 23 2018 17:59:52 GMT+0000 (Coordinated Universal Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 24 2018 04:22:05 GMT+0000 (Coordinated Universal Time)
 </div>
 </div>
 <script src="..\..\..\prettify.js"></script>
