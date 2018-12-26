@@ -2,5 +2,4 @@ node_modules
 .env
 composer.lock
 dist
-coverage
 .nyc_output
