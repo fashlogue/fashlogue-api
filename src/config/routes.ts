@@ -1,5 +1,7 @@
 import {Express, Router, Request, Response, NextFunction} from 'express';
 import UserRouter from '../api/user/user.router';
+import PostRouter from '../api/post/post.router';
+
 
 export default class Route {
     public router : Router;
@@ -23,6 +25,9 @@ export default class Route {
         this
             .app
             .use('/api/v1/users', UserRouter);
+        this
+            .app
+            .use('/api/v1/posts', PostRouter);
     }
 
 }
