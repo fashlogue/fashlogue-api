@@ -72,7 +72,7 @@ export class PostRouter {
         //     .router
         //     .get('/:username', PostController.getUser);
 
-        /**
+    /**
      * @api {delete} v1/users/:_id Update User
      * @apiDescription delete a particular post from the db
      * @apiVersion 1.0.0
@@ -86,20 +86,20 @@ export class PostRouter {
             .router
             .delete('/:_id', PostController.deletePost);
 
-        /**
-     * @api {post} v1/users/authenticate Authenticate user
-     * @apiDescription get a particular user from the db
+    /**
+     * @api {Update} v1/users/:_id Update User
+     * @apiDescription delete a particular post from the db
      * @apiVersion 1.0.0
-     * @apiName authenticate
-     * @apiGroup Users
+     * @apiName updatePost
+     * @apiGroup Post
      * @apiPermission All
      * @apiSuccess {Number}     status                       http status response
-     * @apiSuccess {Object}     data                       data with the user
-     * @apiSucess  {String}     token                        jwt access token issued to user.
+     * @apiSuccess {Object}     result                        successfully Updated
      */
-        // this
-        //     .router
-        //     .post('/authenticate', PostController.authenticate);
+        this
+            .router
+            .put('/:_id', PostController.updatePost)
+
     }
 
 }

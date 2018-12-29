@@ -160,7 +160,7 @@ export default class UserController {
       const status = res.statusCode;
       //
       // Response
-      return res.send({message: 'Sucessfully updated a user', result: result, status: status});
+      return res.send({message: 'Sucessfully deleted a user', result: result, status: status});
     } catch (err) {
 
       //
@@ -169,91 +169,39 @@ export default class UserController {
     }
   }
 
-//   /**
-//  * Authenticate a user into an app by issuing a access token
-//  * @param {Object} req: url params
-//  * @param {Function} res: Express.js response callback
-//  * @param {Function} next: Express.js middleware callback
-//  * @author Freeman Ogbiyoyo
-//  * @public
-//  */
-//   public static async authenticate(req : Request, res : Response, next : NextFunction) {
+  public static async updatePost(req : Request, res : Response, next : NextFunction) {
 
-//     // The attributes.
-//     let username = req.body.username;
-//     let password = req.body.password;
+    try {
 
-//     // The errors object
-//     let errors : Array < Object > = [];
+      //
+      // Get data
+      var options = {
+        // Return the document after updates are applied
+        new: true,
+        // Create a document if one isn't found. Required for `setDefaultsOnInsert`
+        upsert: true,
+        setDefaultsOnInsert: true
+      };
 
-//     // Check password
-//     if (!password) {
-//       errors.push({title: "Attribute is missing", detail: "No password specified"});
-//     } else {
-//       // check password length
-//       if (password.length < 6) {
-//         errors.push({title: "Invalid attribute", detail: "Password must contain at least 6 characters"});
-//       }
-//     }
+      const id : String = req.params._id;
+      let result = await PostModel.findOneAndUpdate({
+        id
+      }, {
+        ...req.body,
+        modifiedAt: new Date()
+      }, options).exec()
 
-//     // If a least one error
-//     if (errors.length > 0) {
-//       res
-//         .status(403)
-//         .send({errors: errors});
-//     } else {
-//       // find the user with the username provided
-//       UserModel
-//         .findOne({username})
-//         .then(user => {
-//           // if user exist
-//           if (user) {
-//             //compare password (the one given by the user and the one in the database)
-//             user.comparePassword(password, (err, isMatch) => {
-//               //if not a match return error
-//               if (err) {
-//                 errors.push({title: "Can't login user", detail: "Error comparing the password"});
-//               }
-//               if (!isMatch) {
-//                 errors.push({title: "Can't login user", detail: "The password doesn't match"});
-//               }
+      const status = res.statusCode;
 
-//               if (errors.length > 0) {
-//                 res
-//                   .status(400)
-//                   .send({errors: errors});
-//               } else {
-//                 res
-//                   .status(201)
-//                   .send({
-//                     data: {
-//                       type: "users",
-//                       id: user._id,
-//                       attributes: {
-//                         email: user['email']
-//                       },
-//                       token: "JWT " + jwt.encode(UserController.userDataToPassInToken(user), process.env.SECRET, "HS256"),
-//                       status: httpStatus.CREATED
-//                     }
-//                   })
-//               }
+      //
+      // Response
+      return res.send({message: 'Sucessfully updated a post', result: result, status: status});
+    } catch (err) {
 
-//             });
-//             // if user not found in the database
-//           } else {
-//             res
-//               .status(400)
-//               .send({
-//                 errors: [
-//                   {
-//                     title: "Invalid attribute",
-//                     detail: "The user doesn't exist in our records"
-//                   }
-//                 ]
-//               })
-//           }
-//         });
+      //
+      // Error response
+      res.send({message: 'Could not update the post', err: err});
+    }
+  }
 
-//     }
-//   }
 }
