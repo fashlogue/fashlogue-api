@@ -14,7 +14,7 @@ describe('Post', ()=> {
     });
 
     describe('POST /api/v1/posts ', () => {
-        it('Should create a post in the db', () => {
+        it('Should create a user in the db', () => {
             return request(app)
                 .post('/api/v1/posts')
                 .send({
@@ -35,7 +35,7 @@ describe('Post', ()=> {
                 })
 
         });
-    });
+    })
 
     describe('GET api/v1/posts', () => {
         it('it should fetch all post in the database', ()=> {
@@ -49,5 +49,56 @@ describe('Post', ()=> {
     })
 
     
+    describe('DELETE api/v1/posts/:_id', ()=> {
+        it('It should delete a post in the database', () => {
+            const post = new PostModel({
+                author: 'ogbiyoyo',
+                permlink : 'https://steemit.com/@sirfreeman',
+                postImage: 'https://steemit.com/@sirfreeman',
+                postDescription : 'hello post',
+                postTitle : 'hello post',
+                Tags: ['fashlogue', 'contempatory'],
+                postedTo: ['fashlogue', 'steemblockchain']  
+            });
+            post.save((err, post)=>{
+                 request(app)
+                .delete('api/v1/posts'+ post._id)
+                .expect(httpStatus[204])
+                .then(res=>{
+                    expect(res.body.message)
+                    .to
+                    .be
+                    .a('string');
+                })
+            })
+        })
+    })
+
+    describe('PUT api/v1/posts/:_id', ()=> {
+        it('it should edit a post in the database with the id', () => {
+            const post = new PostModel({
+                author: 'ogbiyoyo',
+                permlink : 'https://steemit.com/@sirfreeman',
+                postImage: 'https://steemit.com/@sirfreeman',
+                postDescription : 'hello post',
+                postTitle : 'hello post',
+                Tags: ['fashlogue', 'contempatory'],
+                postedTo: ['fashlogue', 'steemblockchain']  
+            });
+            post.save((err, post)=>{
+                 request(app)
+                .put('api/v1/posts'+ post._id)
+                .expect(httpStatus[200])
+                .then(res=>{
+                    expect(res.body.message)
+                    .to
+                    .be
+                    .a('string');
+                })
+            })
+        })
+    })
+
+
 
 })

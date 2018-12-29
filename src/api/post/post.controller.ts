@@ -133,50 +133,41 @@ export default class UserController {
         });
     }
 
-//   }
 
 //   /**
-//  * Udate a user in the database
+//  * Delete a user in the database
 //  * @param {Object} req: url params
 //  * @param {Function} res: Express.js response callback
 //  * @param {Function} next: Express.js middleware callback
 //  * @author Freeman Ogbiyoyo
 //  * @public
 //  */
-//   public static async update(req : Request, res : Response, next : NextFunction) {
+  public static async deletePost(req : Request, res : Response, next : NextFunction) {
 
-//     try {
+    try {
 
-//       //
-//       // Get data
-//       var options = {
-//         // Return the document after updates are applied
-//         new: true,
-//         // Create a document if one isn't found. Required for `setDefaultsOnInsert`
-//         upsert: true,
-//         setDefaultsOnInsert: true
-//       };
+      //
+      // Get data
 
-//       const username : String = req.params.username;
-//       let result = await UserModel.findOneAndUpdate({
-//         username
-//       }, {
-//         ...req.body,
-//         modifiedAt: new Date()
-//       }, options).exec()
+      const id : String = req.params._id;
+      let result = await PostModel.findOneAndDelete({
+        id
+      }, {
+        ...req.body,
+        deletedAt: new Date()
+      }).exec()
 
-//       const status = res.statusCode;
+      const status = res.statusCode;
+      //
+      // Response
+      return res.send({message: 'Sucessfully updated a user', result: result, status: status});
+    } catch (err) {
 
-//       //
-//       // Response
-//       return res.send({message: 'Sucessfully updated a user', result: result, status: status});
-//     } catch (err) {
-
-//       //
-//       // Error response
-//       res.send({message: 'Could not update the user', err: err});
-//     }
-//   }
+      //
+      // Error response
+      res.send({message: 'Could not delete post', err: err});
+    }
+  }
 
 //   /**
 //  * Authenticate a user into an app by issuing a access token
