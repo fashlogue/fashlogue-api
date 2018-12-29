@@ -26,6 +26,29 @@ describe('USER', () => {
                 });
         });
 
+        
+    })
+
+    describe('GET /api/v1/users/@username', ()=> {
+
+        it('Should return a user from the db when passed the username as param', ()=> {
+            const user = new UserModel({
+              username: 'perpz',
+              password: 'miracle123'
+            })
+            user.save(user =>{
+             request(app)
+             .get('/api/v1/users'+ user.username)
+             .expect(httpStatus.OK)
+             .then(res =>
+                expect(res.body.result)
+                .to
+                .be
+                .an('object')
+             )
+            })
+         })
+ 
     })
 
     describe('POST /api/v1/users ', () => {

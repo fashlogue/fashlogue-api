@@ -88,7 +88,7 @@ export class PostRouter {
 
     /**
      * @api {Update} v1/users/:_id Update User
-     * @apiDescription delete a particular post from the db
+     * @apiDescription update a particular post in the db
      * @apiVersion 1.0.0
      * @apiName updatePost
      * @apiGroup Post
@@ -103,9 +103,5 @@ export class PostRouter {
     }
 
 }
-
-//
-// Create Router and export its configured Express.Router new
-// UserRouter().init();
 
 export default new PostRouter().router;
