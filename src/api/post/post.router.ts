@@ -26,7 +26,7 @@ export class PostRouter {
     init() {
 
         /**
-     * @api {get} v1/posts Get all Users
+     * @api {get} v1/posts Get all post
      * @apiDescription Get all post in the database
      * @apiVersion 1.0.0
      * @apiName getAllPost
@@ -60,7 +60,7 @@ export class PostRouter {
 
         /**
      * @api {get} v1/users/:username Get Users
-     * @apiDescription get a particular user from the db
+     * @apiDescription get a particular post from the db
      * @apiVersion 1.0.0
      * @apiName getUser
      * @apiGroup Users
@@ -73,7 +73,7 @@ export class PostRouter {
         //     .get('/:username', PostController.getUser);
 
     /**
-     * @api {delete} v1/users/:_id Update User
+     * @api {delete} v1/users/:_id Update post
      * @apiDescription delete a particular post from the db
      * @apiVersion 1.0.0
      * @apiName Delete
@@ -87,7 +87,7 @@ export class PostRouter {
             .delete('/:_id', PostController.deletePost);
 
     /**
-     * @api {Update} v1/users/:_id Update User
+     * @api {Update} v1/users/:_id Update Post
      * @apiDescription update a particular post in the db
      * @apiVersion 1.0.0
      * @apiName updatePost
@@ -100,8 +100,21 @@ export class PostRouter {
             .router
             .put('/:_id', PostController.updatePost)
 
-    }
+        /**
+     * @api {Get} v1/users/:_id Get Post
+     * @apiDescription update a particular post in the db
+     * @apiVersion 1.0.0
+     * @apiName getPost
+     * @apiGroup Post
+     * @apiPermission All
+     * @apiSuccess {Number}     status                       http status response
+     * @apiSuccess {Object}     result                        successfully Updated
+     */
+    this
+    .router
+    .get('/:_id', PostController.getPost)
 
+   }
 }
 
 export default new PostRouter().router;

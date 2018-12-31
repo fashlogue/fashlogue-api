@@ -27,53 +27,11 @@ export default class UserController {
     } catch (err) {
 
       // Error response
-      res.send({message: 'Could not get Users', err: err});
+      res.send({message: 'Could not get Post', err: err});
     }
   }
 
-  /**
- * Get all the users from the database
- * @param {Object} req: url params
- * @param {Function} res: Express.js response callback
- * @param {Function} next: Express.js middleware callback
- * @author Freeman Ogbiyoyo
- * @public
- */
-
-//   public static async getUser(req : Request, res : Response, next : NextFunction) {
-
-//     try {
-
-//       //
-//       // Get data
-//       const username : String = req.params.username;
-//       console.log(username);
-//       let result = await UserModel
-//         .findOne({username})
-//         .exec();
-//       const status = res.statusCode;
-
-//       //
-//       // Response
-//       res.send({message: 'Successfull got a user', result: result, status: status});
-//     } catch (err) {
-
-//       //
-//       // Error response
-//       res.send({message: 'Could not get Examples', err: err});
-//     }
-//   }
-
-//   /**
-//  * Return the user Object
-//  * @param {Object} user:  user object
-//  * @author Freeman Ogbiyoyo
-//  * @private @static
-//  */
-
-//   private static userDataToPassInToken(user) : Object {
-//     return {_id: user._id, email: user.email};
-//   }
+  
 
   /**
  * Create a post in the database
@@ -134,14 +92,14 @@ export default class UserController {
     }
 
 
-//   /**
-//  * Delete a user in the database
-//  * @param {Object} req: url params
-//  * @param {Function} res: Express.js response callback
-//  * @param {Function} next: Express.js middleware callback
-//  * @author Freeman Ogbiyoyo
-//  * @public
-//  */
+  /**
+ * Delete a user in the database
+ * @param {Object} req: url params
+ * @param {Function} res: Express.js response callback
+ * @param {Function} next: Express.js middleware callback
+ * @author Freeman Ogbiyoyo
+ * @public
+ */
   public static async deletePost(req : Request, res : Response, next : NextFunction) {
 
     try {
@@ -169,6 +127,36 @@ export default class UserController {
     }
   }
 
+   /**
+ * Return a user in the database
+ * @param {Object} req: url params
+ * @param {Function} res: Express.js response callback
+ * @param {Function} next: Express.js middleware callback
+ * @author Freeman Ogbiyoyo
+ * @public
+ */
+public static async getPost(req : Request, res : Response, next : NextFunction) {
+
+  try {
+
+    //
+    // Get data
+
+    const _id : String = req.params._id;
+    let result = await PostModel.findById({_id})
+
+    const status = res.statusCode;
+    
+    // Response
+    return res.send({message: 'Sucessfully fetched the post', result: result, status: status});
+  } catch (err) {
+
+    //
+    // Error response
+    res.send({message: 'Could not fetch post', err: err});
+  }
+}
+
   public static async updatePost(req : Request, res : Response, next : NextFunction) {
 
     try {
@@ -183,9 +171,9 @@ export default class UserController {
         setDefaultsOnInsert: true
       };
 
-      const id : String = req.params._id;
+      const _id : String = req.params._id;
       let result = await PostModel.findOneAndUpdate({
-        id
+        _id
       }, {
         ...req.body,
         modifiedAt: new Date()

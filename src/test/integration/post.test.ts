@@ -14,7 +14,7 @@ describe('Post', ()=> {
     });
 
     describe('POST /api/v1/posts ', () => {
-        it('Should create a user in the db', () => {
+        it('Should create a post in the db', () => {
             return request(app)
                 .post('/api/v1/posts')
                 .send({
@@ -62,7 +62,7 @@ describe('Post', ()=> {
             });
             post.save((err, post)=>{
                  request(app)
-                .delete('api/v1/posts'+ post._id)
+                .delete('api/v1/posts/'+ post._id)
                 .expect(httpStatus[204])
                 .then(res=>{
                     expect(res.body.message)
@@ -86,11 +86,11 @@ describe('Post', ()=> {
                 Tags: ['fashlogue', 'contempatory'],
                 postedTo: ['fashlogue', 'steemblockchain']  
             })
-            post.save(post =>{
-             request(app)
-             .get('/api/v1/users'+ post.user._id)
+            post.save((err, post) => {
+             return request(app)
+             .get('/api/v1/users/'+ post._id)
              .expect(httpStatus.OK)
-             .then(res =>
+             .then(res => 
                 expect(res.body.result)
                 .to
                 .be
@@ -113,9 +113,10 @@ describe('Post', ()=> {
                 Tags: ['fashlogue', 'contempatory'],
                 postedTo: ['fashlogue', 'steemblockchain']  
             });
-            post.save((err, post)=>{
-                 request(app)
-                .put('api/v1/posts'+ post._id)
+            post.save((err, postres)=>{
+                 return request(app)
+                .put('api/v1/posts/'+ postres._id)
+                .send({permlink : 'https://stemit.com/@sirfreeman'})
                 .expect(httpStatus[200])
                 .then(res=>{
                     expect(res.body.message)

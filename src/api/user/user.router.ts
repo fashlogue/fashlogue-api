@@ -86,9 +86,9 @@ export class UserRouter {
             .router
             .put('/:username', UserController.update);
 
-        /**
+    /**
      * @api {post} v1/users/authenticate Authenticate user
-     * @apiDescription get a particular user from the db
+     * @apiDescription authenticate a particular user from the db
      * @apiVersion 1.0.0
      * @apiName authenticate
      * @apiGroup Users
@@ -100,6 +100,7 @@ export class UserRouter {
         this
             .router
             .post('/authenticate', UserController.authenticate);
+
     }
 
 }
