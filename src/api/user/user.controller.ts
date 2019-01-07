@@ -13,6 +13,7 @@ export default class UserController {
  * @author Freeman Ogbiyoyo
  * @public
  */
+
   public static async getAll(req : Request, res : Response, next : NextFunction) {
 
     try {
@@ -33,38 +34,39 @@ export default class UserController {
   }
 
   /**
- * Get all the users from the database
- * @param {Object} req: url params
- * @param {Function} res: Express.js response callback
- * @param {Function} next: Express.js middleware callback
- * @author Freeman Ogbiyoyo
- * @public
- */
+   * Get a the users from the database
+   * @param {Object} req: url params
+   * @param {Function} res: Express.js response callback
+   * @param {Function} next: Express.js middleware callback
+   * @author Freeman Ogbiyoyo
+   * @public
+   */
 
   public static async getUser(req : Request, res : Response, next : NextFunction) {
 
     try {
-
+  
       //
       // Get data
+  
       const username : String = req.params.username;
-      console.log(username);
-      let result = await UserModel
-        .findOne({username})
-        .exec();
+      let result = await UserModel.findOne({
+        username
+      }).exec()
+  
       const status = res.statusCode;
-
-      //
+      
       // Response
-      res.send({message: 'Successfull got a user', result: result, status: status});
+      return res.send({message: 'Sucessfully fetched the users', result: result, status: status});
     } catch (err) {
-
+  
       //
       // Error response
-      res.send({message: 'Could not get Examples', err: err});
+      res.send({message: 'Could not fetch user', err: err});
     }
   }
-
+  
+ 
   /**
  * Return the user Object
  * @param {Object} user:  user object
@@ -141,7 +143,7 @@ export default class UserController {
   }
 
   /**
- * Udate a user in the database
+ * Update a user in the database
  * @param {Object} req: url params
  * @param {Function} res: Express.js response callback
  * @param {Function} next: Express.js middleware callback
