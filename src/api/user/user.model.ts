@@ -1,109 +1,130 @@
-import { Schema, Document, model, Model } from 'mongoose';
+import {Schema, Document, model, Model} from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as uniqueValidator from "mongoose-unique-validator";
-import * as mongoose from 'mongoose';
+import {IUser} from './user.interface';
+import * as passport from 'passport';
 
 const SALT_WORK_FACTOR = 10;
 
-let UserSchema: Schema = new Schema({
-    name: {
-        type: String,
-        required: true,
-      },
-    email: {
-        type: String,
-        unique: true,
-        default: ''
-      },
-    verified: {
-        type: Boolean,
-        default: false
-      },
-    roles: {
-        type: Array,
-        default: ['user'],
-      },
-    username: {
-        type: String,
-        unique: true,
-        required: true,
-        default:'',
-        lowercase: true,
-      },
-      isBanned: {
-        type: Boolean,
-        default: false,
-      },
-      bannedUntil: {
-        type: Number,
-        default: null,
-      },
-      banReason: {
-        type: String,
-        default: null,
-      },
-      bannedBy: {
-        type: String,
-        default: null,
-      },
-    password: {
-        type: String,
-        default: ''
-      },
-    createdAt: {
-      type: Date,
-      default: new Date
-    },
-    updatedAt: {
-      type: Date,
-      default: new Date
-    }, 
+/**
+ * User Schema
+ * @author Freeman Ogbiyoyo
+ * @public
+ */
+export let UserSchema : Schema = new Schema({
+  name: {
+    type: String,
+    default: ''
+  },
+  oauthId: {
+    type: Number,
+    default: null
+  },
+  profilePic: {
+    type: String,
+    default: ''
+  },
+  bio: {
+    type: String,
+    default: ''
+  },
+  brand: {
+    type: String,
+    default: ''
+  },
+  phone: {
+    type: Number,
+    default: null
+  },
+  email: {
+    type: String,
+    default: ''
+  },
+  verified: {
+    type: Boolean,
+    default: false
+  },
+  roles: {
+    type: Array,
+    default: ['user']
+  },
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+    default: '',
+    lowercase: true
+  },
+  isBanned: {
+    type: Boolean,
+    default: false
+  },
+  bannedUntil: {
+    type: Number,
+    default: null
+  },
+  banReason: {
+    type: String,
+    default: null
+  },
+  bannedBy: {
+    type: String,
+    default: null
+  },
+  password: {
+    type: String,
+    default: ''
+  },
+  createdAt: {
+    type: Date,
+    default: new Date
+  },
+  modifiedAt: {
+    type: Date,
+    default: new Date
+  }
 });
 
 UserSchema.plugin(uniqueValidator);
 
-UserSchema.pre('save', function(next) {
-  var user = this;
-
-  // only hash the password if it has been modified (or is new)
-  if (!user.isModified('password')) return next();
-
-  // generate a salt
-  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-      if (err) return next(err);
-
-      // hash the password using our new salt
-      bcrypt.hash(user.password, salt, function(err, hash) {
-          if (err) return next(err);
-
-          // override the cleartext password with the hashed one
-          user.password = hash;
-          next();
-      });
-  });
-
-
+UserSchema.pre < IUser > ('save', function (next) {
+  let user = this
+  bcrypt.hash(user.password, SALT_WORK_FACTOR, (error, hash) => {
+    if (error) {
+      return next(error);
+    } else {
+      this.password = hash
+      next()
+    }
+  })
 });
 
-
-interface UserSchemaDoc extends Document {
+/**
+ * UserShchemaDoc Interface
+ * @author Freeman Ogbiyoyo
+ * @public
+ */
+interface UserSchemaDoc extends IUser,
+Document {
   comparePassword(pw, cb);
 }
 
-//interface UserSchemaInterface extends UserSchemaDoc {}
-
-// method to compare password
-UserSchema.methods = {
-  comparePassword: function(pw, cb) {
-    bcrypt.compare(pw, this.password, function(err, isMatch) {
+/**
+ * method to comparePassword.
+ * @author Freeman Ogbiyoyo
+ * @public
+ */
+export const passwordMethod = UserSchema.methods = {
+  comparePassword: function (pw, cb) {
+    bcrypt
+      .compare(pw, this.password, function (err, isMatch) {
         if (err) {
           return cb(err);
         }
-        cb(null, isMatch); 
-    });
+        cb(null, isMatch);
+      });
   }
 };
 
-
-
-export default model<UserSchemaDoc>('User', UserSchema);
+const UserModel : Model < UserSchemaDoc > = model < UserSchemaDoc > ('User', UserSchema);
+export default UserModel;
