@@ -50,10 +50,10 @@ describe('USER', () => {
 
     describe('PUT /api/v1/users/:username ', () => {
 
-        it('Should update oauthId in users model', (done) => {
+        it('Should update oauthId in users model', () => {
             let user = new UserModel({username: "freeman", password: "miracle123"});
             user.save((err, user) => {
-                request(app)
+               return request(app)
                     .put('/api/v1/users/' + user.username)
                     .send({oauthId: 200})
                     .expect(httpStatus.OK)
@@ -66,14 +66,15 @@ describe('USER', () => {
                             .to
                             .be
                             .equal(200);
-                        done()
+                        
                     })
             })
         })
 
-        it('It should return, can not update user if error', (done) => {
+
+        it('It should return, can not update user if error', () => {
             let user = new UserModel({username: "caleb", password: "miracle123"});
-            user.save((err, user) => {
+            return user.save((err, user) => {
                 request(app)
                     .put('/api/v1/users/' + user.username)
                     .send({oauthId: 'hello'})
@@ -87,7 +88,7 @@ describe('USER', () => {
                             .to
                             .be
                             .equal('Could not update the user');
-                        done()
+                        
                     })
 
             })
@@ -95,11 +96,33 @@ describe('USER', () => {
 
     })
 
+    describe('GET /api/v1/users/@username', ()=> {
+
+        it('Should return a user from the db when passed the username as param', ()=> {
+            const user = new UserModel({
+              username: 'perpz',
+              password: 'miracle123'
+            })
+            user.save(user =>{
+            return request(app)
+             .get('/api/v1/users/'+ user.username)
+             .expect(httpStatus.OK)
+             .then(res =>
+                expect(res.body.result)
+                .to
+                .be
+                .an('object')
+             )
+            })
+         })
+ 
+    })
+
     describe('POST /api/v1/users/authenticate', () => {
-        it('it Should authenticate a valid user', (done) => {
+        it('it Should authenticate a valid user', () => {
             let user = new UserModel({username: "ogbiyoyosky", password: "miracle123"});
-            user.save((err, user) => {
-                request(app)
+            user.save((user) => {
+               return request(app)
                     .post('/api/v1/users/authenticate')
                     .send({username: "ogbiyoyosky", password: "miracle123"})
                     .expect(httpStatus.CREATED)
@@ -112,15 +135,14 @@ describe('USER', () => {
                             .to
                             .be
                             .a('string');
-                        done();
                     })
             })
         })
 
-        it('it should return error when there is no password', (done) => {
+        it('it should return error when there is no password', () => {
             let user = new UserModel({username: "sirfreeman", password: "miracle123"});
             user.save((err, user) => {
-                request(app)
+               return request(app)
                     .post('/api/v1/users/authenticate')
                     .send({username: "sirfreeman"})
                     .then((res) => {
@@ -132,15 +154,14 @@ describe('USER', () => {
                             .to
                             .be
                             .eql('No password specified');
-                        done();
                     })
             })
         })
 
-        it('it should return error when password less than 6', (done) => {
+        it('it should return error when password less than 6', () => {
             let user = new UserModel({username: "sirfreeman", password: "miracle123"});
             user.save((err, user) => {
-                request(app)
+               return request(app)
                     .post('/api/v1/users/authenticate')
                     .send({username: "sirfreeman", password: "mira"})
                     .then((res) => {
@@ -152,13 +173,13 @@ describe('USER', () => {
                             .to
                             .be
                             .eql('Password must contain at least 6 characters');
-                        done();
+                        
                     })
             })
         })
 
-        it('it should return error if user does not exist', (done) => {
-            request(app)
+        it('it should return error if user does not exist', () => {
+            return request(app)
                 .post('/api/v1/users/authenticate')
                 .send({username: "freemanity", password: "miracle123"})
                 .then((res) => {
@@ -170,7 +191,7 @@ describe('USER', () => {
                         .to
                         .be
                         .eql("The user doesn't exist in our records");
-                    done();
+                    
                 })
         })
     })
