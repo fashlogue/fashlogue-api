@@ -1,5 +1,5 @@
 import {Schema, Document, model, Model} from 'mongoose';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt-nodejs';
 import * as uniqueValidator from "mongoose-unique-validator";
 import {IUser} from './user.interface';
 import * as passport from 'passport';

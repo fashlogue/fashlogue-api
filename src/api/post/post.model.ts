@@ -5,7 +5,7 @@ import {IPost} from './post.interface';
 const SALT_WORK_FACTOR = 10;
 
 /**
- * User Schema
+ * Post Schema
  * @author Freeman Ogbiyoyo
  * @public
  */
